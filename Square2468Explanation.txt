@@ -1,0 +1,16 @@
+Explanation #1
+--------------
+
+For cases like this
+
+| ! | X | ! |       | ! | X | ! |       | ! |   |   |       |   |   | ! |
+| X | O |   |       |   | O | X |       | X | O |   |       |   | O | X |      
+| ! |   |   |       |   |   | ! |       | ! | X | ! |       | ! | X | ! |
+
+We can either block the potential two 2-moves intersection or expand our O to 2 moves, which are all represent by the !.
+However, our algorithm will be stopped at the ...
+
+square = Scan2movesIntersection(game, BotLetter)
+
+... with the two diagonals - diagonal1 and diagonal2. However, since the intersection is at the middle square, which is 
+already taken, this would lead to an infinite loop.

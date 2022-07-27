@@ -1,0 +1,61 @@
+Explanation #1
+--------------
+
+| X |   | O |       | O |   | X |       |   |   | O |       | O |   |   |
+|   |   |   |       |   |   |   |       |   |   |   |       |   |   |   |      
+| O |   |   |       |   |   | O |       | O |   | X |       | X |   | O |
+
+Notice that these cases, the index of our first move and the opponents response is
+
+| 0 |   | 2 |       | 0 |   | 2 |       |   |   | 2 |       | 0 |   |   |
+|   |   |   |       |   |   |   |       |   |   |   |       |   |   |   |      
+| 6 |   |   |       |   |   | 8 |       | 6 |   | 8 |       | 6 |   | 8 |
+
+Notice that whenever we subtract the index of our first square from the index of the other 2 squares,
+the absolute value is either 2 or 6. However, we need to eliminate the case that the center square is played by the opponent
+if our starting move is at square 2 or 6, since abs(2-4) and abs(6-4) is also equal 2, which explain this line of code
+(the \ signals moving down a line)
+
+elif ("O" not in game.board[4]) and\
+((abs(game.board.index("X") - game.board.index("O")) == 2) or (abs(game.board.index("X") - game.board.index("O")) == 6)):
+
+For cases like this, where the opponents go to either two corners, we can move in the opposite corner to our first square (the !).
+This way, the opponents must play the middle square, allowing us to find two 2-moves intersection (the !).
+
+| X |   | ! |       | X |   | O | 
+|   | O |   |       |   | O |   |
+| O |   | X |       | ! |   | X |  
+
+We can also go the corner opposite to the one played by the opponent, which we can also force a two 2-moves intersection (the !)
+
+| X | O | X |       | X |   | O | 
+|   |   |   |       | O |   |   |
+| O |   | ! |       | X |   | ! | 
+
+
+
+Explanation #2 (continue from Explanation #1)
+---------------------------------------------    
+Therefore, we can go in either of the remaining corner, which can choosen from these 2 lines of code
+
+cornerSet = {0, 2, 6, 8}
+square = random.choice(list(cornerSet.intersection(game.availableMoves()))) + 1
+
+Notice that the cases for this 
+
+
+
+Explanation #3
+--------------
+
+
+| X |   | ! |       | ? | ? | X |       |   |   | ? |       | ! | X |   |
+| ? | O | X |       |   | O |   |       | X | O | ? |       |   | O |   |      
+| ? |   |   |       |   | X | ! |       | ! |   | X |       | X | ? | ? |
+
+| X | ? | ? |       | ! |   | X |       |   | X | ! |       | ? |   |   |
+|   | O |   |       | X | O | ? |       |   | O |   |       | ? | O | X |      
+| ! | X |   |       |   |   | ? |       | ? | ? | X |       | X |   | ! |
+
+For these 8 cases, we need to avoid moving at the ? square because our opponents can force a two 2-moves intersection at !.
+Therefore, can play the remaining squares besides the ?
